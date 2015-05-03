@@ -27,7 +27,7 @@
                 .Split('.');
 
             int leva = GetNumber(input[0]);
-            int stotinka = GetNumber(input[1]);
+            int stotinka = input.Length == 1 ? 0 : GetNumber(input[1]);
 
             var text = Number2BgText(leva);
             text += leva == 1 ? " лев" : " лева";
