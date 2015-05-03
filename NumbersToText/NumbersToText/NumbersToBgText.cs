@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Converts decimal number to Bulgarian currency text
@@ -22,9 +22,7 @@
         /// <returns>Example output: "сто двадесет и три лева и сто двадесет и три стотинки"</returns>
         public static string Number2BgLeva(double inputNumber)
         {
-            var input = inputNumber.ToString(CultureInfo.InvariantCulture)
-                .Replace(',', '.')
-                .Split('.');
+            string[] input = Regex.Split(inputNumber.ToString("F2"), @"\.");
 
             int leva = GetNumber(input[0]);
             int stotinka = input.Length == 1 ? 0 : GetNumber(input[1]);
@@ -56,12 +54,12 @@
 
                 if (number > 2000000000)
                 {
-                    throw new ArgumentOutOfRangeException("input", NumbersToBgText.TooBigNumber);
+                    throw new ArgumentOutOfRangeException("input", TooBigNumber);
                 }
             }
             else
             {
-                throw new ArgumentException("input", NumbersToBgText.InvalidNumber);
+                throw new ArgumentException("input", InvalidNumber);
             }
 
             return number;
